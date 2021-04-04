@@ -30,19 +30,19 @@ class AdminHomePage extends StatefulWidget {
 class _AdminPageState extends State<AdminHomePage> {
   _onOrdersPressed() {
     setState(() {
-      isOff = false;
+      _isOff = false;
       _body = _getState('Orders');
     });
   }
 
   Widget _body;
 
-  bool isOff = true;
+  bool _isOff = true;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: isOff
+        appBar: _isOff
             ? null
             : AppBar(
                 // Here we take the value from the MyHomePage object that was created by
@@ -53,7 +53,7 @@ class _AdminPageState extends State<AdminHomePage> {
                       onPressed: _onOrdersPressed, child: const Text('Orders')),
                 ],
               ),
-        body: isOff
+        body: _isOff
             ? Center(
                 child: ElevatedButton(
                     onPressed: _onOrdersPressed,
@@ -62,14 +62,7 @@ class _AdminPageState extends State<AdminHomePage> {
                       backgroundColor: getMainColor(),
                     )),
               )
-            : _body
-        //Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        //child: _body,
-        //),
-        // This trailing comma makes auto-formatting nicer for build methods.
-        );
+            : _body);
   }
 }
 
@@ -77,10 +70,22 @@ Widget _getState(String forPage) {
   switch (forPage) {
     case 'Orders':
       {
-        return Table(
-          children: [
-            TableRow(children: [TableCell(child: const Text('Дата'))])
+        return DataTable(
+          columns: [
+            DataColumn(label: Text('Дата')),
+            DataColumn(label: Text('Номер')),
           ],
+          rows: [
+            DataRow(cells: [
+              DataCell(Text('02.04.2021')),
+              DataCell(Text('123456'))
+            ]),
+            DataRow(cells: [
+              DataCell(Text('03.04.2021')),
+              DataCell(Text('564321'))
+            ]),
+          ],
+          dividerThickness: 0,
         );
       }
   }
